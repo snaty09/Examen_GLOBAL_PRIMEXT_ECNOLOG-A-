@@ -1,0 +1,54 @@
+<!-- src/app/components/person-form/person-form.component.html -->
+<h1 mat-dialog-title>{{ isEditMode ? 'Editar Persona' : 'Agregar Persona' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="personForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nombre(s)</mat-label>
+      <input matInput formControlName="FirstName">
+      <mat-error *ngIf="personForm.get('FirstName')?.hasError('required')">
+        El nombre es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Apellido Paterno</mat-label>
+      <input matInput formControlName="LastNameP">
+      <mat-error *ngIf="personForm.get('LastNameP')?.hasError('required')">
+        El apellido paterno es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Apellido Materno</mat-label>
+      <input matInput formControlName="LastNameM">
+      <mat-error *ngIf="personForm.get('LastNameM')?.hasError('required')">
+        El apellido materno es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="Address">
+      <mat-error *ngIf="personForm.get('Address')?.hasError('required')">
+        La dirección es obligatoria
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="Phone">
+      <mat-error *ngIf="personForm.get('Phone')?.hasError('required')">
+        El teléfono es obligatorio
+      </mat-error>
+      <mat-error *ngIf="personForm.get('Phone')?.hasError('pattern')">
+        El teléfono debe tener 10 dígitos
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSubmit()" [disabled]="!personForm.valid">
+    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+  </button>
+</div>

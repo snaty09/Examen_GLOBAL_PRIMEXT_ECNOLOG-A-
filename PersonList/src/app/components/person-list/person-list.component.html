@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+  <span>Gestión de Personas</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="openDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <mat-form-field appearance="fill" class="filter">
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Nombre o Apellido">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div *ngIf="loading$ | async" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Nombre(s) Column -->
+    <ng-container matColumnDef="FirstName">
+      <th mat-header-cell *matHeaderCellDef> Nombre(s) </th>
+      <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
+    </ng-container>
+
+    <!-- Apellido Paterno Column -->
+    <ng-container matColumnDef="LastNameP">
+      <th mat-header-cell *matHeaderCellDef> Apellido Paterno </th>
+      <td mat-cell *matCellDef="let element"> {{element.LastNameP}} </td>
+    </ng-container>
+
+    <!-- Apellido Materno Column -->
+    <ng-container matColumnDef="LastNameM">
+      <th mat-header-cell *matHeaderCellDef> Apellido Materno </th>
+      <td mat-cell *matCellDef="let element"> {{element.LastNameM}} </td>
+    </ng-container>
+
+    <!-- Dirección Column -->
+    <ng-container matColumnDef="Address">
+      <th mat-header-cell *matHeaderCellDef> Dirección </th>
+      <td mat-cell *matCellDef="let element"> {{element.Address}} </td>
+    </ng-container>
+
+    <!-- Teléfono Column -->
+    <ng-container matColumnDef="Phone">
+      <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+      <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
+    </ng-container>
+
+    <!-- Acciones Column -->
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="accent" (click)="openDialog(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletePerson(element.PersonID)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
